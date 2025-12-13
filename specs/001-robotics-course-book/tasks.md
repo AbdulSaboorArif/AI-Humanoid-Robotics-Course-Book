@@ -26,12 +26,12 @@ description: "Task list for Physical AI & Humanoid Robotics Course Book feature 
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Docusaurus project in `docs/`
-- [ ] T002 Configure Docusaurus `docusaurus.config.js` for navigation and basic theme
-- [ ] T003 [P] Create root content directories: `docs/`, `static/`, `code-examples/`
-- [ ] T004 [P] Create module directories under `docs/`: `intro/`, `ros2/`, `simulation/`, `isaac/`, `humanoid/`, `vla/`
-- [ ] T005 [P] Create code example directories under `code-examples/`: `ros2/`, `gazebo/`, `unity/`, `isaac/`, `capstone/`
-- [ ] T006 [P] Add setup `README.md` to `code-examples/`
+- [X] T001 Initialize Docusaurus project in `docs/`
+- [X] T002 Configure Docusaurus `docusaurus.config.js` for navigation and basic theme
+- [X] T003 [P] Create root content directories: `docs/`, `static/`, `code-examples/`
+- [X] T004 [P] Create module directories under `docs/`: `intro/`, `ros2/`, `simulation/`, `isaac/`, `humanoid/`, `vla/`
+- [X] T005 [P] Create code example directories under `code-examples/`: `ros2/`, `gazebo/`, `unity/`, `isaac/`, `capstone/`
+- [X] T006 [P] Add setup `README.md` to `code-examples/`
 
 ---
 
@@ -41,10 +41,10 @@ description: "Task list for Physical AI & Humanoid Robotics Course Book feature 
 
 **⚠️ CRITICAL**: No user story content work can begin until this phase is complete
 
-- [ ] T007 Implement Python script for Flesch-Kincaid readability check in `.specify/scripts/quality/readability.py`
-- [ ] T008 Implement Python script for APA citation style verification (placeholder) in `.specify/scripts/quality/citation.py`
-- [ ] T009 Integrate plagiarism detection tool (placeholder) in `.specify/scripts/quality/plagiarism.py`
-- [ ] T010 Develop framework for source verification and fact-checking in `.specify/scripts/quality/fact_check.py`
+- [X] T007 Implement Python script for Flesch-Kincaid readability check in `.specify/scripts/quality/readability.py`
+- [X] T008 Implement Python script for APA citation style verification (placeholder) in `.specify/scripts/quality/citation.py`
+- [X] T009 Integrate plagiarism detection tool (placeholder) in `.specify/scripts/quality/plagiarism.py`
+- [X] T010 Develop framework for source verification and fact-checking in `.specify/scripts/quality/fact_check.py`
 - [ ] T011 Set up CI/CD pipeline for automated quality checks in `.github/workflows/quality.yml`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
@@ -59,33 +59,33 @@ description: "Task list for Physical AI & Humanoid Robotics Course Book feature 
 
 ### Implementation for User Story 1 - Module 1: The Robotic Nervous System (ROS 2)
 
-- [ ] T012 [P] [US1] Draft learning outcomes for Weeks 1-2 in `docs/intro/week1-2.md`
-- [ ] T013 [P] [US1] Draft lecture content for Weeks 1-2 in `docs/intro/week1-2.md`
-- [ ] T014 [P] [US1] Outline labs/mini-projects for Weeks 1-2 in `docs/intro/week1-2.md`
-- [ ] T015 [P] [US1] Draft learning outcomes for Weeks 3-5 in `docs/ros2/week3-5.md`
-- [ ] T016 [P] [US1] Draft lecture content for Weeks 3-5 in `docs/ros2/week3-5.md`
-- [ ] T017 [P] [US1] Outline labs/mini-projects for Weeks 3-5 in `docs/ros2/week3-5.md`
+- [X] T012 [P] [US1] Draft learning outcomes for Weeks 1-2 in `docs/intro/week1-2.md`
+- [X] T013 [P] [US1] Draft lecture content for Weeks 1-2 in `docs/intro/week1-2.md`
+- [X] T014 [P] [US1] Outline labs/mini-projects for Weeks 1-2 in `docs/intro/week1-2.md`
+- [X] T015 [P] [US1] Draft learning outcomes for Weeks 3-5 in `docs/ros2/week3-5.md`
+- [X] T016 [P] [US1] Draft lecture content for Weeks 3-5 in `docs/ros2/week3-5.md`
+- [X] T017 [P] [US1] Outline labs/mini-projects for Weeks 3-5 in `docs/ros2/week3-5.md`
 
 ### Implementation for User Story 1 - Module 2: The Digital Twin (Gazebo & Unity)
 
-- [ ] T018 [P] [US1] Draft learning outcomes for Weeks 6-7 in `docs/simulation/week6-7.md`
-- [ ] T019 [P] [US1] Draft lecture content for Weeks 6-7 in `docs/simulation/week6-7.md`
-- [ ] T020 [P] [US1] Outline labs/mini-projects for Weeks 6-7 in `docs/simulation/week6-7.md`
+- [X] T018 [P] [US1] Draft learning outcomes for Weeks 6-7 in `docs/simulation/week6-7.md`
+- [X] T019 [P] [US1] Draft lecture content for Weeks 6-7 in `docs/simulation/week6-7.md`
+- [X] T020 [P] [US1] Outline labs/mini-projects for Weeks 6-7 in `docs/simulation/week6-7.md`
 
 ### Implementation for User Story 1 - Module 3: The AI-Robot Brain (NVIDIA Isaac)
 
-- [ ] T021 [P] [US1] Draft learning outcomes for Weeks 8-10 in `docs/isaac/week8-10.md`
-- [ ] T022 [P] [US1] Draft lecture content for Weeks 8-10 in `docs/isaac/week8-10.md`
-- [ ] T023 [P] [US1] Outline labs/mini-projects for Weeks 8-10 in `docs/isaac/week8-10.md`
+- [X] T021 [P] [US1] Draft learning outcomes for Weeks 8-10 in `docs/isaac/week8-10.md`
+- [X] T022 [P] [US1] Draft lecture content for Weeks 8-10 in `docs/isaac/week8-10.md`
+- [X] T023 [P] [US1] Outline labs/mini-projects for Weeks 8-10 in `docs/isaac/week8-10.md`
 
 ### Implementation for User Story 1 - Module 4: Vision-Language-Action (VLA)
 
-- [ ] T024 [P] [US1] Draft learning outcomes for Weeks 11-12 in `docs/humanoid/week11-12.md`
-- [ ] T025 [P] [US1] Draft lecture content for Weeks 11-12 in `docs/humanoid/week11-12.md`
-- [ ] T026 [P] [US1] Outline labs/mini-projects for Weeks 11-12 in `docs/humanoid/week11-12.md`
-- [ ] T027 [P] [US1] Draft learning outcomes for Week 13 in `docs/vla/week13.md`
-- [ ] T028 [P] [US1] Draft lecture content for Week 13 in `docs/vla/week13.md`
-- [ ] T029 [P] [US1] Outline labs/mini-projects for Week 13 in `docs/vla/week13.md`
+- [X] T024 [P] [US1] Draft learning outcomes for Weeks 11-12 in `docs/humanoid/week11-12.md`
+- [X] T025 [P] [US1] Draft lecture content for Weeks 11-12 in `docs/humanoid/week11-12.md`
+- [X] T026 [P] [US1] Outline labs/mini-projects for Weeks 11-12 in `docs/humanoid/week11-12.md`
+- [X] T027 [P] [US1] Draft learning outcomes for Week 13 in `docs/vla/week13.md`
+- [X] T028 [P] [US1] Draft lecture content for Week 13 in `docs/vla/week13.md`
+- [X] T029 [P] [US1] Outline labs/mini-projects for Week 13 in `docs/vla/week13.md`
 
 **Checkpoint**: At this point, User Story 1 content should be fully drafted and the course book structure complete.
 
@@ -119,9 +119,9 @@ description: "Task list for Physical AI & Humanoid Robotics Course Book feature 
 
 ### Implementation for User Story 3
 
-- [ ] T037 [US3] Develop capstone project description and requirements in `docs/capstone/project.md`
-- [ ] T038 [P] [US3] Create capstone code examples/starter in `code-examples/capstone/` and link from content
-- [ ] T039 [US3] Integrate capstone guidance into relevant module content (e.g., `docs/vla/week13.md`)
+- [X] T037 [US3] Develop capstone project description and requirements in `docs/vla/capstone_overview.md`
+- [X] T038 [P] [US3] Create capstone code examples/starter in `code-examples/capstone/` and link from content
+- [X] T039 [US3] Integrate capstone guidance into relevant module content (e.g., `docs/vla/week13.md`)
 
 **Checkpoint**: All user stories should now be independently functional.
 
@@ -131,13 +131,13 @@ description: "Task list for Physical AI & Humanoid Robotics Course Book feature 
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T040 Review all content for Flesch-Kincaid Grade 11-13 readability across `docs/`
-- [ ] T041 Perform final plagiarism check across entire course book content in `docs/`
-- [ ] T042 Run Docusaurus build and resolve any errors from the `docs/` directory
+- [X] T040 Review all content for Flesch-Kincaid Grade 11-13 readability across `docs/`
+- [X] T041 Perform final plagiarism check across entire course book content in `docs/`
+- [X] T042 Run Docusaurus build and resolve any errors from the `docs/` directory
 - [ ] T043 Run Lighthouse audit for the Docusaurus site and optimize for performance (>90)
 - [ ] T044 Check for broken links across the generated Docusaurus site
-- [ ] T045 Final technical and editorial review of all content in `docs/`
-- [ ] T046 Generate a comprehensive APA-style reference list in `docs/references.md`
+- [X] T045 Final technical and editorial review of all content in `docs/`
+- [X] T046 Generate a comprehensive APA-style reference list in `docs/references.md`
 
 ---
 
