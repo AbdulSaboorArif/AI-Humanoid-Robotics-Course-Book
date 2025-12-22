@@ -1,223 +1,254 @@
-# RAG Website Ingestion Pipeline & Chatbot API
+# RAG Website Ingestion and Retrieval Backend
 
-This repository contains a complete RAG (Retrieval Augmented Generation) system for the Physical AI & Humanoid Robotics course website, including:
+This backend provides a complete RAG (Retrieval-Augmented Generation) system for the Physical AI & Humanoid Robotics Course. It includes both an ingestion pipeline to crawl and store course content in a vector database, and a retrieval API to query that content for RAG chatbot integration.
 
-1. **Content Ingestion Pipeline**: Extracts and vectorizes website content
-2. **Chatbot API**: FastAPI server for answering questions about the course
-3. **React Chatbot Component**: Embedded chat interface for the Docusaurus site
+## Features
 
-## Overview
-
-### Ingestion Pipeline
-The pipeline performs the following steps:
-1. **Sitemap Parsing**: Discovers all content URLs from the sitemap.xml
-2. **Content Extraction**: Extracts clean educational text from each Docusaurus page
-3. **Text Chunking**: Splits content into semantically meaningful chunks
-4. **Embedding Generation**: Creates vector embeddings using Cohere's embed-english-v3.0 model
-5. **Vector Storage**: Stores embeddings in Qdrant Cloud with rich metadata
-
-### Chatbot API
-The FastAPI server provides:
-- Question answering about course content
-- Context-aware responses using selected text
-- Conversation history management
-- Source citation from textbook sections
+- **Website Ingestion**: Crawls the Physical AI & Humanoid Robotics Course website (https://ai-humanoid-robotics-course-book.vercel.app/)
+- **Content Extraction**: Extracts clean educational content while filtering out navigation and layout elements
+- **Embedding Generation**: Creates high-quality embeddings using Cohere's embed-english-v3.0 model
+- **Vector Storage**: Stores embeddings with rich metadata in Qdrant vector database
+- **Retrieval API**: FastAPI endpoint for querying relevant content based on user queries
+- **Module Hierarchy**: Preserves the 13-week course structure and module/section relationships
 
 ## Prerequisites
 
 - Python 3.11+
-- Node.js 20+ (for Docusaurus)
-- UV package manager (optional but recommended)
-- Cohere API key
-- Qdrant Cloud account and API credentials
-- OpenAI API key (for chatbot responses)
+- pip package manager
+- Git (optional, for cloning)
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. Clone and Navigate to Backend Directory
 
-Using pip:
 ```bash
+cd backend
+```
+
+### 2. Create a Virtual Environment (Recommended)
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+# Using uv (recommended)
+uv pip install -r requirements.txt
+
+# Alternative using pip
 pip install -r requirements.txt
 ```
 
-Or using UV (recommended for faster installs):
-```bash
-uv pip install -r requirements.txt
-```
+### 4. Configure Environment Variables
 
-### 2. Configure Environment Variables
-
-Copy the example environment file and fill in your credentials:
+Create an `.env` file by copying the example:
 
 ```bash
 cp .env.example .env
 ```
 
-Then edit `.env` and add your API keys:
-- `COHERE_API_KEY`: Your Cohere API key from [Cohere Dashboard](https://dashboard.cohere.ai/api-keys)
-- `QDRANT_URL`: Your Qdrant Cloud cluster URL
-- `QDRANT_API_KEY`: Your Qdrant Cloud API key
-- `OPENAI_API_KEY`: Your OpenAI API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+Edit the `.env` file with your API keys:
 
-## Usage
+```bash
+# Edit .env file with your favorite editor
+nano .env
+```
 
-### Running Content Ingestion
+Required environment variables:
+- `COHERE_API_KEY`: Your Cohere API key (get from https://dashboard.cohere.com/api-keys)
+- `QDRANT_URL`: Your Qdrant cluster URL (or leave empty for local instance)
+- `QDRANT_API_KEY`: Your Qdrant API key (or leave empty for local instance)
+
+### 5. Verify Setup
+
+Run the ingestion pipeline to fetch and process the course content:
 
 ```bash
 python main.py
 ```
 
-This will:
-- Parse the sitemap from `https://hackathon-physical-ai-humanoid-text-sigma.vercel.app/sitemap.xml`
-- Extract content from all discovered pages
-- Create vector embeddings for each text chunk
-- Store everything in a Qdrant collection named "physical_ai_humanoid_textbook"
+## Usage
 
-### Running the Chatbot API
+### 1. Run the Ingestion Pipeline
 
-```bash
-python chatbot_api.py
-```
-
-The API will start on `http://localhost:8000` and provide the following endpoints:
-
-- `GET /`: API information and available endpoints
-- `GET /health`: Health check with service status
-- `POST /chat`: Send messages to the chatbot
-- `GET /conversations/{id}`: Get conversation history
-- `DELETE /conversations/{id}`: Delete conversation
-
-### Using the Unified Runner
+The ingestion pipeline will:
+- Crawl the Physical AI & Humanoid Robotics Course website
+- Extract clean content from all pages
+- Generate embeddings using Cohere
+- Store content with metadata in Qdrant
 
 ```bash
-# Check environment configuration
-python run.py check
-
-# Run content ingestion only
-python run.py ingest
-
-# Start chatbot API only
-python run.py api
-
-# Run both ingestion and API
-python run.py all
+python main.py
 ```
 
-## API Usage
+### 2. Start the Retrieval API Server
 
-### Chat API
+Start the FastAPI server to enable querying of the stored content:
 
-Send a POST request to `/chat` with this JSON payload:
-
-```json
-{
-  "message": "What is sensorimotor intelligence?",
-  "selected_text": "optional selected text from the page",
-  "conversation_id": "optional existing conversation ID",
-  "module_filter": "optional module name to filter results",
-  "max_results": 5
-}
+```bash
+uvicorn retrieval:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Response format:
-```json
-{
-  "response": "AI-generated answer...",
-  "conversation_id": "conv_123456",
-  "sources": [
-    {
-      "text": "Source text preview...",
-      "url": "https://...",
-      "title": "Page Title",
-      "module": "Module Name",
-      "section": "Section Name",
-      "score": 0.85
-    }
-  ],
-  "confidence_score": 0.92
-}
+Or run the retrieval server directly:
+
+```bash
+python retrieval.py
 ```
 
-## Configuration
+### 3. Query the Retrieval API
 
-The pipeline has several configurable parameters in `main.py`:
+Once the server is running, you can query it using:
 
-- `chunk_size`: Size of text chunks (default: 1000 characters)
-- `chunk_overlap`: Overlap between chunks (default: 100 characters)
-- `delay_range`: Delay range between requests (default: 1-2 seconds)
-- `vector_size`: Embedding dimension (default: 1024 for Cohere model)
+```
+GET http://localhost:8000/retrieve?query=your_search_query&k=5
+```
+
+Example with curl:
+
+```bash
+curl "http://localhost:8000/retrieve?query=What%20is%20Physical%20AI?&k=5"
+```
+
+The API supports the following parameters:
+- `query`: The search query (required)
+- `k`: Number of results to return (default: 5, max: 20)
+- `module_filter`: Filter results by specific module
+- `section_filter`: Filter results by specific section
+
+### 4. Check API Health
+
+Check the health of the retrieval service:
+
+```
+GET http://localhost:8000/health
+```
+
+Get available modules:
+
+```
+GET http://localhost:8000/modules
+```
+
+## API Endpoints
+
+### `/retrieve`
+- **Method**: GET
+- **Description**: Retrieve relevant content chunks based on the query
+- **Parameters**:
+  - `query` (required): Search query
+  - `k` (optional): Number of results (default: 5, max: 20)
+  - `module_filter` (optional): Filter by module
+  - `section_filter` (optional): Filter by section
+- **Response**: JSON with query, results, and metadata
+
+### `/health`
+- **Method**: GET
+- **Description**: Check service health and collection status
+
+### `/modules`
+- **Method**: GET
+- **Description**: Get list of all available modules in the collection
+
+### `/`
+- **Method**: GET
+- **Description**: Health check endpoint
 
 ## Architecture
 
-```mermaid
-graph TD
-    A[Website Content] --> B[Sitemap Parser]
-    B --> C[Content Extractor]
-    C --> D[Text Chunker]
-    D --> E[Cohere Embeddings]
-    E --> F[Qdrant Vector DB]
+The system consists of two main components:
 
-    G[User Question] --> H[Chatbot API]
-    H --> I[Vector Search]
-    I --> F
-    F --> J[Relevant Context]
-    J --> K[OpenAI Response]
-    K --> L[Final Answer]
-```
+### Ingestion Pipeline (main.py)
+1. **URL Discovery**: Gets all URLs from sitemap.xml or uses fallback URLs
+2. **Content Extraction**: Extracts clean text content from each URL, preserving module/section hierarchy
+3. **Content Chunking**: Splits content into meaningful chunks while maintaining context
+4. **Embedding Generation**: Creates embeddings using Cohere embed-english-v3.0 (1024 dimensions)
+5. **Storage**: Saves embeddings with rich metadata to Qdrant vector database
 
-## Testing
+### Retrieval API (retrieval.py)
+1. **Query Processing**: Accepts search queries and generates embeddings
+2. **Vector Search**: Finds relevant content in Qdrant using cosine similarity
+3. **Response Formatting**: Returns top-k results with metadata for RAG chatbot integration
 
-After running the ingestion pipeline, you can test the system:
+## Data Model
 
-```bash
-python main.py  # This includes a test search at the end
-```
+The system stores content with the following metadata:
+- `id`: Unique identifier for the chunk
+- `text`: The actual content text
+- `url`: Source URL
+- `title`: Page title
+- `module`: Course module (e.g., "Week 1-2: Introduction to Physical AI")
+- `section`: Specific section within the module
+- `hierarchy_path`: Full path in content hierarchy
+- `word_count`: Number of words in the chunk
+- `embedding`: 1024-dimensional vector representation
+- `created_at`: Timestamp when chunk was created
 
-Or test the API directly:
+## Configuration
 
-```bash
-curl -X POST "http://localhost:8000/chat" \
-     -H "Content-Type: application/json" \
-     -d '{"message": "What is humanoid robotics?"}'
-```
+### Environment Variables
+
+- `COHERE_API_KEY`: Cohere API key for embedding generation
+- `QDRANT_URL`: Qdrant cluster URL (leave empty for local instance)
+- `QDRANT_API_KEY`: Qdrant API key
+- `TARGET_WEBSITE_URL`: URL of the course website (default: https://ai-humanoid-robotics-course-book.vercel.app/)
+- `COLLECTION_NAME`: Qdrant collection name (default: rag_embedding)
+- `PORT`: API server port (default: 8000)
+
+### Collection Configuration
+
+The Qdrant collection is configured with:
+- 1024-dimensional vectors (for Cohere embed-english-v3.0)
+- Cosine distance metric
+- HNSW indexing (m=16, ef_construct=128)
+- Payload indexes for metadata fields (url, module, section, hierarchy_path)
+
+## Dependencies
+
+- `requests`: HTTP requests
+- `beautifulsoup4`: HTML parsing
+- `cohere`: Embedding generation
+- `qdrant-client`: Vector database interaction
+- `python-dotenv`: Environment variable management
+- `fastapi`: Web framework for retrieval API
+- `uvicorn`: ASGI server
+- `tqdm`: Progress bars
+- `lxml`: XML parsing for sitemaps
+- `markdownify`: HTML to markdown conversion
+- `urllib3`: HTTP client
+- `pydantic`: Data validation
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **API Key Errors**: Ensure all required environment variables are set
-2. **Connection Issues**: Check your internet connection and API endpoints
-3. **Memory Issues**: Reduce `chunk_size` or `max_results` if experiencing memory problems
-4. **Rate Limits**: Increase `delay_range` if hitting API rate limits
+1. **Rate Limiting**: The system includes 1-second delays between requests to respect the target website. If you encounter rate limits, consider increasing the delay.
 
-### Logs
+2. **API Keys**: Ensure your Cohere and Qdrant API keys are valid and have sufficient quota.
 
-Check the following log files:
-- `ingestion.log`: Content ingestion pipeline logs
-- `chatbot.log`: Chatbot API logs
+3. **Network Issues**: The ingestion pipeline includes retry mechanisms for network errors.
 
-## Development
+4. **Large Content**: Very large pages are automatically chunked to maintain optimal search performance.
 
-### Adding New Features
+### Logging
 
-1. **Content Sources**: Modify `get_sitemap_urls()` to support additional websites
-2. **Embedding Models**: Update the Cohere model version in `embed_chunks()`
-3. **Response Quality**: Adjust the OpenAI system prompt in `generate_response()`
-4. **UI Customization**: Modify the React component styles and behavior
+The ingestion pipeline logs progress to both console and `ingestion.log` file. Check these logs for detailed information about the processing status.
 
-### Code Structure
+## Testing
 
-```
-backend/
-├── main.py              # Content ingestion pipeline
-├── chatbot_api.py       # FastAPI chatbot server
-├── run.py              # Unified runner script
-├── requirements.txt    # Python dependencies
-├── .env.example       # Environment template
-└── README.md          # This file
-```
+The ingestion pipeline includes a test search function that runs after processing to verify the system is working correctly. You can also manually test the retrieval API by making requests to the endpoints.
 
-## License
+## Performance
 
-This project is part of the Physical AI & Humanoid Robotics Course Book.
+- The ingestion pipeline processes approximately 20 pages of the course website
+- Embeddings are generated using Cohere's efficient embed-english-v3.0 model
+- Qdrant provides fast vector search with HNSW indexing
+- The system handles the full 13-week Physical AI & Humanoid Robotics course structure
