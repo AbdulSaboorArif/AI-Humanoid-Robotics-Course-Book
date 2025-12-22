@@ -72,7 +72,7 @@ const Chatbot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch('https://abdul-saboor-ai-rag-chatbot.hf.space/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
