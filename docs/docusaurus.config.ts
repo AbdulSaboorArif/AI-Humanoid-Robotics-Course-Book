@@ -34,7 +34,7 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
+  
   presets: [
     [
       'classic',
@@ -67,6 +67,7 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+
 
   themeConfig: {
     // Replace with your project's social card

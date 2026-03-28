@@ -1,0 +1,12 @@
+requests==2.31.0
+beautifulsoup4==4.12.2
+cohere==4.4.3
+qdrant-client==1.7.0
+python-dotenv==1.0.0
+fastapi==0.104.1
+uvicorn==0.24.0
+tqdm==4.66.1
+lxml==4.9.3
+markdownify==0.11.6
+urllib3==2.0.7
+pydantic==2.5.0
